@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru-ru" lang="ru-ru" dir="ltr" >
+<HTML>
+<head>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+	<script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+	<meta name='viewport' content='width=device-width,initial-scale=1'/>
+	<meta content='true' name='HandheldFriendly'/>
+	<meta content='width' name='MobileOptimized'/>
+	<meta content='yes' name='apple-mobile-web-app-capable'/>
+	<title>Чат-бот</title>
+
+</head>
+
+<body>
+
+  <div class="container"> 
+      
+    <div style="" id="local-container">
+        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);">
+            <div style="position: absolute; top: -3.5vw; left: -0.2vw; color: white; font-size: 2vw;">
+                <div style="font-family: Nautilus; font-size: 1.2vw; margin-left: 0vw; margin-bottom: -0.6vw;">Database</div><div>Helper</div>
+            </div> 
+            <div style="margin-right: -1px; vertical-align: top; width: 16vw; height: 70vh; background-color: #fdfdfd; display: inline-block; border-radius: 1vw 0 0 1vw;">
+                <!-- <input id="modal-login-button" type="button" value="Войти" class="button" style="position: absolute; bottom: 1vw; left: 5.5vw; margin-right: 0.5vw;width: 5vw; font-size: 0.8vw; padding: 0.3vw 0.5vw;" onclick="ShowModalLogin()"/> -->
+
+                <div id="modal-login-title" style="text-align: center; font-size: 1vw; margin: 1vw 1vw;">Вход в учётную запись</div>
+                <input class="form-send" id="login" style="font-size: 0.8vw; width: 13vw; margin: 0 1vw 0.4vw 1.1vw;" placeholder="Логин"/><br>
+                <input class="form-send" id="password" style="font-size: 0.8vw; width: 13vw; margin: 0.4vw 1.1vw;" type="password" placeholder="Пароль"/><br>
+                <div id="warning-login-password" style="margin: 0.4vw; color: #ff5151; font-size: 0.8vw; display: none;">Неверный логин или пароль</div>
+                <!--                <div style="color: #ff982d; text-decoration: underline; font-size: 0.8vw; text-align: center; cursor: pointer; margin: 0.4vw 1vw;" onclick="ShowRegistrationForm()">Зарегестрироваться</div>-->
+                <input id="button-send-question" type="button" value="Войти" class="button" style="width: 6vw; font-size: 0.9vw; margin: 0.4vw 1vw 0.8vw 4.8vw;" onclick="LoginAccount()">
+
+            </div><!--
+            --><div style="position: relative; vertical-align: top; width: 33vw; height: 70vh; background-color: #cce8ff; display: inline-block; border-radius: 0 1vw 1vw 0; background-image: url(img/back1.png); background-size: contain;">
+                
+                <div id="container" style="margin: 1vw 0 0 1vw; height: 85%; overflow-y:scroll; overflow-x: hidden; font-size: 0.8vw;">
+
+                </div>
+            
+                <style>
+                    
+                    .message-block {
+                        display: table;
+                        background: white; 
+                        padding: 0.5vw 0.6vw; 
+                        margin: 0 1vw 0.6vw 0;
+                        max-width: 25vw;
+                        animation: ShowMessage 0.1s 0s linear;
+                    }
+                    
+                    .message-left {
+                        border-radius: 0.6vw 0.6vw 0.6vw 0;
+                    }
+                    
+                    .message-right {
+                        border-radius: 0.6vw 0.6vw 0 0.6vw;
+                        position: relative;
+                        left: 100%;
+                        transform: translateX(-100%);
+                        margin-left: -1vw;
+                    }
+                    
+                    .inputfile {
+                        display: none;
+                    }
+
+                    .button-send {
+                        height: 2vw; 
+                        width: 2vw; 
+                        background-size: contain; 
+                        background-repeat: no-repeat; 
+                        background-color: transparent; 
+                        outline: none; 
+                        cursor: pointer;
+                    }
+
+                    .button-send:hover {
+                        filter:brightness(140%);
+                    }
+                </style>
+
+                <div id="enter" style="display: none; position: absolute; bottom: 0; background: #e8f7ff; width: 100%; border-radius: 0 0 1vw 0;">
+
+                    <div style="text-align: center; margin: 1.2vh 0;">
+
+                        <input type="file" name="file" id="file" class="inputfile" />
+                        <label for="file" style="vertical-align: middle;margin-right: 0.5vw;display: inline-block;">
+                            <div class="button-send" style="background-image: url(img/plus.png);"></div>
+                        </label>
+
+                        <textarea id="text-message" class="form-message-send" style="height: 4vh;resize: none;font-size: 0.8vw;width: 24vw;vertical-align: middle;" placeholder="Введите сообщение"></textarea>
+
+                        <input class="button-send" id="button-send-question" type="button" style="border: 0; background-image: url(img/send.png); height: 2vw; width: 2vw; vertical-align: middle;margin-left: 0.5vw;" onclick="Send()">
+                    </div>
+                        
+                </div>
+
+            </div>
+        </div>
+    
+	</div>
+
+  </div>
+
+      <div id="result"></div>
+
+    <script>
+        func0();
+        function func0() {
+            $( "#result" ).load( "pythonAnswer.html" );
+            var currentAnswer = document.querySelector('#result').innerHTML;
+            if(lastAnswer != currentAnswer) {
+                lastAnswer = currentAnswer;
+                Answer(currentAnswer);
+            }
+
+            setTimeout(function () {
+                func0();
+            }, 2000);
+        }
+    </script>
+
+ <div id="log"></div>
+
+</body>
+</HTML>
